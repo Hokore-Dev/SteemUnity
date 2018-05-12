@@ -25,6 +25,7 @@
           <e p="Editor" t="Include">
             <e p="APIGeneratorEditor.cs" t="Include" />
           </e>
+          <e p="SteemNetworkManager.cs" t="Include" />
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />

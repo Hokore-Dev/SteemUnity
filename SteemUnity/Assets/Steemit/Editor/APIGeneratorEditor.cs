@@ -8,7 +8,9 @@ using SimpleJson;
 using SimpleJSON;
 using System.IO;
 
-[CustomEditor(typeof(APIGenerator))]
+namespace Steemit
+{
+    [CustomEditor(typeof(APIGenerator))]
 public class APIGeneratorEditor : Editor
 {      
     private APIGenerator _api;
@@ -67,8 +69,8 @@ public class APIGeneratorEditor : Editor
 
     private void GenerateSourceCode(string inJson)
     {
-        string codePrefix  = "public class SteemitAPI\n{\n\t/// Auto Generated Begin\n";
-        string codePostfix = "\t/// Auto Generated End\n}";
+        string codePrefix  = "namespace Steemit\n{\n\tpublic class SteemitAPI\n\t{\n\t\t/// Auto Generated Begin\n";
+        string codePostfix = "\t\t/// Auto Generated End\n\t}\n}";
         
         StringBuilder code  = new StringBuilder(codePrefix);
         JSONArray     array = JSONNode.Parse(inJson).AsArray;
@@ -89,7 +91,7 @@ public class APIGeneratorEditor : Editor
                 paramList.Add(paramArray[k]);
             }
 
-            code.AppendFormat("\n\tprivate void {0}(", method);
+            code.AppendFormat("\n\t\tprivate void {0}(", method);
             foreach (var param in paramList)
             {
                 code.AppendFormat("string {0},", param);
@@ -98,11 +100,11 @@ public class APIGeneratorEditor : Editor
             {
                 code.Remove(code.Length - 1, 1);
             }
-            code.Append(")\n\t{\n");
+            code.Append(")\n\t\t{\n");
             
             // BODY
 
-            code.Append("\t}\n");
+            code.Append("\t\t}\n");
             Debug.Log(string.Format("[{0}] method : {1}", apiName, method));
         }
         code.Append(codePostfix);
@@ -111,4 +113,5 @@ public class APIGeneratorEditor : Editor
         File.WriteAllText(_api.scriptPath, code.ToString(), System.Text.Encoding.UTF8);
         AssetDatabase.Refresh();
     }
+}
 }

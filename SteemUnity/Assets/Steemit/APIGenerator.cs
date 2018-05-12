@@ -5,32 +5,33 @@ using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-
-[InitializeOnLoad]
 #endif
 
-
-[System.Serializable]
-public class APIGenerator : ScriptableObject 
+namespace Steemit
 {
-	public string apiUrl
+	[InitializeOnLoad]
+	[System.Serializable]
+	public class APIGenerator : ScriptableObject 
 	{
-		get { return _apiUrl; }
-	}
+		public string apiUrl
+		{
+			get { return _apiUrl; }
+		}
 
-	public string scriptPath
-	{
-		get { return string.Format("{0}/{1}", Application.dataPath, _scriptPath); }
-	}
+		public string scriptPath
+		{
+			get { return string.Format("{0}/{1}", Application.dataPath, _scriptPath); }
+		}
 
-	[SerializeField]
-	private string _apiUrl = "https://raw.githubusercontent.com/steemit/steem-js/master/src/api/methods.js";
+		[SerializeField]
+		private string _apiUrl = "https://raw.githubusercontent.com/steemit/steem-js/master/src/api/methods.js";
 
-	[SerializeField]
-	private string _scriptPath = "Steemit/_GeneratedScript/SteemitAPI";
+		[SerializeField]
+		private string _scriptPath = "Steemit/_GeneratedScript/SteemitAPI";
 
-	private void Reset()
-	{
-		_apiUrl = "https://raw.githubusercontent.com/steemit/steem-js/master/src/api/methods.js";
+		private void Reset()
+		{
+			_apiUrl = "https://raw.githubusercontent.com/steemit/steem-js/master/src/api/methods.js";
+		}
 	}
 }
